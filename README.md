@@ -71,3 +71,12 @@ The test script is a placeholder that we’ll replace later.
 
 NB: You can limit the debug output to our app.ts file’s own debugLog() statements using DEBUG=app instead of DEBUG=*
 Windows users will probably need to change the `export` to `SET` since export is how it works on Mac and Linux. 
+
+## DTOa and DAOs
+Now, to handle our user IDs, let’s add the shortid library (using the terminal):
+```
+npm i --save shortid
+npm i --save-dev @types/shortid
+```
+for securely hashing the user password
+`npm i --save argon2 `
