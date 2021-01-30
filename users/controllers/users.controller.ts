@@ -4,11 +4,9 @@ import argon2 from 'argon2';
 import debug from 'debug';
 
 const log: debug.IDebugger = debug('app:users-controller');
-
 class UsersController {
 	private static instance: UsersController;
 
-	// controller singleton
 	static getInstance(): UsersController {
 		if (!UsersController.instance) {
 			UsersController.instance = new UsersController();
@@ -36,13 +34,13 @@ class UsersController {
 		if (req.body.password) {
 			req.body.password = await argon2.hash(req.body.password);
 		}
-		log(await usersService.patchById(req.body));
+		log(await usersService.patchById(req.params.userId, req.body));
 		res.status(204).send(``);
 	}
 
 	async put(req: express.Request, res: express.Response) {
 		req.body.password = await argon2.hash(req.body.password);
-		log(await usersService.updateById({ id: req.params.userId, ...req.body }));
+		log(await usersService.updateById(req.params.userId, req.body));
 		res.status(204).send(``);
 	}
 

@@ -80,3 +80,9 @@ npm i --save-dev @types/shortid
 ```
 for securely hashing the user password
 `npm i --save argon2 `
+
+add mongoose for mongoDB
+`npm i --save mongoose`
+
+# JWT
+`npm install --save jsonwebtoken crypto`

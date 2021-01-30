@@ -1,4 +1,4 @@
-import usersDao from '../daos/users.dao';
+import UsersDao from '../daos/users.dao';
 import { CRUD } from '../../common/interfaces/crud.interface';
 import { UsersDto } from '../dto/users.model';
 
@@ -13,32 +13,35 @@ class UsersService implements CRUD {
 	}
 
 	async create(resource: UsersDto) {
-		return await usersDao.addUser(resource);
+		resource.permissionLevel = 1;
+		return await UsersDao.addUser(resource);
 	}
 
 	async deleteById(resourceId: string) {
-		return await usersDao.removeUserById(resourceId);
+		return UsersDao.removeUserById(resourceId);
 	}
 
 	async list(limit: number, page: number) {
-		// limit and page are ignored until we upgrade our DAO
-		return await usersDao.getUsers();
+		return await UsersDao.getUsers(limit, page);
 	}
 
-	async patchById(resource: UsersDto) {
-		return await usersDao.patchUserById(resource);
+	async patchById(userId: string, resource: UsersDto) {
+		return UsersDao.patchUserById(userId, resource);
 	}
 
 	async readById(resourceId: string) {
-		return await usersDao.getUserById(resourceId);
+		return await UsersDao.getUserById(resourceId);
 	}
 
-	async updateById(resource: UsersDto) {
-		return await usersDao.putUserById(resource);
+	async updateById(userId: string, resource: UsersDto) {
+		return UsersDao.patchUserById(userId, resource);
 	}
 
 	async getUserByEmail(email: string) {
-		return usersDao.getUserByEmail(email);
+		return UsersDao.getUserByEmail(email);
+	}
+	async getUserByEmailWithPassword(email: string) {
+		return UsersDao.getUserByEmailWithPassword(email);
 	}
 }
 

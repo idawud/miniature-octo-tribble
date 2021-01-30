@@ -1,6 +1,8 @@
 import { CommonRoutesConfig } from '../common/common.routes.config';
 import UsersController from './controllers/users.controller';
 import UsersMiddleware from './middleware/users.middleware';
+import jwtMiddleware from '../auth/middleware/jwt.middleware';
+import permissionMiddleware from '../common/middleware/common.permission.middleware';
 import express from 'express';
 
 export class UsersRoutes extends CommonRoutesConfig {
@@ -8,30 +10,43 @@ export class UsersRoutes extends CommonRoutesConfig {
 		super(app, 'UsersRoutes');
 	}
 
-	configureRoutes(): express.Application {
+	configureRoutes() {
 		this.app
 			.route(`/users`)
-			.get(UsersController.listUsers)
+			.get(jwtMiddleware.validJWTNeeded, permissionMiddleware.onlyAdminCanDoThisAction, UsersController.listUsers)
 			.post(
 				UsersMiddleware.validateRequiredUserBodyFields,
-				UsersMiddleware.validateSameEmailDoesNotExist,
+				UsersMiddleware.validateSameEmailDoesntExist,
 				UsersController.createUser
 			);
 
 		this.app.param(`userId`, UsersMiddleware.extractUserId);
 		this.app
 			.route(`/users/:userId`)
-			.all(UsersMiddleware.validateUserExists)
+			.all(
+				UsersMiddleware.validateUserExists,
+				jwtMiddleware.validJWTNeeded,
+				permissionMiddleware.onlySameUserOrAdminCanDoThisAction
+			)
 			.get(UsersController.getUserById)
 			.delete(UsersController.removeUser);
 
 		this.app.put(`/users/:userId`, [
 			UsersMiddleware.validateRequiredUserBodyFields,
 			UsersMiddleware.validateSameEmailBelongToSameUser,
+			jwtMiddleware.validJWTNeeded,
+			permissionMiddleware.onlySameUserOrAdminCanDoThisAction,
+			permissionMiddleware.minimumPermissionLevelRequired(permissionMiddleware.PAID_PERMISSION),
 			UsersController.put
 		]);
 
-		this.app.patch(`/users/:userId`, [ UsersMiddleware.validatePatchEmail, UsersController.patch ]);
+		this.app.patch(`/users/:userId`, [
+			UsersMiddleware.validatePatchEmail,
+			jwtMiddleware.validJWTNeeded,
+			permissionMiddleware.onlySameUserOrAdminCanDoThisAction,
+			// permissionMiddleware.minimumPermissionLevelRequired(permissionMiddleware.PAID_PERMISSION),
+			UsersController.patch
+		]);
 
 		return this.app;
 	}
