@@ -1,0 +1,60 @@
+GET http://localhost:3000/
+###
+
+GET http://localhost:3000/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJNNVU1blFuUjMiLCJlbWFpbCI6ImlkYXd1ZGluaG9AeWFob28uY29tIiwicHJvdmlkZXIiOiJlbWFpbCIsInBlcm1pc3Npb25MZXZlbCI6MSwicmVmcmVzaEtleSI6IjZIQVpNdXBPZzF6MDV3d2szSFlFMlE9PSIsImlhdCI6MTYxMjAyNTk3MSwiZXhwIjoxNjEyMDYxOTcxfQ.FwZ13cbEFcdM8ZG6CbssTfelul1i1Gxq_YMUX0aldgE
+###
+
+POST http://localhost:3000/auth
+content-type: application/json
+
+{
+    "email": "idawudinho@yoo.com",
+    "password": "password"
+}
+###
+
+POST http://localhost:3000/users
+content-type: application/json
+
+{
+    "email": "idawudinho@yoo.com",
+    "password": "password",
+    "firstName": "dawud",
+    "lastName": "ismail",
+    "permissionLevel": 8
+}
+###
+
+GET http://localhost:3000/users/tz37H_5S9
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ0ejM3SF81UzkiLCJlbWFpbCI6ImlkYXd1ZGluaG9AeW9vLmNvbSIsInByb3ZpZGVyIjoiZW1haWwiLCJwZXJtaXNzaW9uTGV2ZWwiOjEsInJlZnJlc2hLZXkiOiJRb1g0bmxUcHRDM0E0YVQyL3hYaCt3PT0iLCJpYXQiOjE2MTIwMjYzNzMsImV4cCI6MTYxMjA2MjM3M30.G2N_agT6xODXvpq05mqGkAs8K_vlcyAP7OmqS7gKbnM
+
+###
+
+PUT http://localhost:3000/users/tz37H_5S9
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ0ejM3SF81UzkiLCJlbWFpbCI6ImlkYXd1ZGluaG9AeW9vLmNvbSIsInByb3ZpZGVyIjoiZW1haWwiLCJwZXJtaXNzaW9uTGV2ZWwiOjEsInJlZnJlc2hLZXkiOiJRb1g0bmxUcHRDM0E0YVQyL3hYaCt3PT0iLCJpYXQiOjE2MTIwMjYzNzMsImV4cCI6MTYxMjA2MjM3M30.G2N_agT6xODXvpq05mqGkAs8K_vlcyAP7OmqS7gKbnM
+
+{
+    "email": "idawudinho@yoo.com", 
+    "password": "password",
+    "firstName": "put dawud",
+    "lastName": "pdf-ismail"
+}
+###
+
+PATCH  http://localhost:3000/users/tz37H_5S9
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ0ejM3SF81UzkiLCJlbWFpbCI6ImlkYXd1ZGluaG9AeW9vLmNvbSIsInByb3ZpZGVyIjoiZW1haWwiLCJwZXJtaXNzaW9uTGV2ZWwiOjEsInJlZnJlc2hLZXkiOiJRb1g0bmxUcHRDM0E0YVQyL3hYaCt3PT0iLCJpYXQiOjE2MTIwMjYzNzMsImV4cCI6MTYxMjA2MjM3M30.G2N_agT6xODXvpq05mqGkAs8K_vlcyAP7OmqS7gKbnM
+
+{
+    "email": "idawudinho@yoo.com", 
+    "password": "password",
+    "firstName": "patch dawud",
+    "lastName": "pdf-ismail",
+    "permissionLevel": 8
+}
+###
+
+DELETE  http://localhost:3000/users/tz37H_5S9
+###
